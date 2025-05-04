@@ -12,6 +12,5 @@ sudo apt install -y dotnet-sdk-8.0
 verify correct installaion with:
 dotnet --version
 
-
 The Azure DevOps project has been configured with a custom ssh connection to the virtual machine located at Azure
 With this solution, the CD is automated with the .yml file directly on the machine allocated at the cloud.
