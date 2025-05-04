@@ -49,10 +49,5 @@ stages:
         sshEndpoint: 'DevicesSimulatorSSH'
         runOptions: 'commands'
         commands: |
-          cd /home/azureuser/app
-          pwd
-          cd app
-          pwd
-          dotnet restore
-          nohup dotnet run > output.log 2>&1 &
+          bash /home/azureuser/app/run.sh
       displayName: 'Ejecutar la aplicación en la VM'
