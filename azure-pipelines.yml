@@ -50,5 +50,6 @@ stages:
         runOptions: 'commands'
         commands: |
           cd /home/azureuser/app
-          nohup dotnet MyApp.dll > output.log 2>&1 &
+          dotnet restore
+          nohup dotnet run > output.log 2>&1 &
       displayName: 'Ejecutar la aplicación en la VM'
