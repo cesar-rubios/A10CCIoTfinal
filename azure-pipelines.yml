@@ -41,11 +41,7 @@ stages:
               readyTimeout: '30000'
               # Comandos para desplegar y ejecutar la aplicación en la VM
               commands: |
-                cd /home/azureuser
-                rm -rf app
-                mkdir app
-                git clone https://github.com/cesar-rubios/A10CCIoTfinal.git app
-                cd app
-                dotnet build simulated-device-2.csproj
-                dotnet run --project simulated-device-2.csproj
+                cd /home/azureuser/app
+                dotnet build simulated-device-2.csproj --configuration $(buildConfiguration)
+                nohup dotnet run --project simulated-device-2.csproj --configuration $(buildConfiguration) > app.log 2>&1 &
             displayName: 'Ejecutar aplicación en la VM'
