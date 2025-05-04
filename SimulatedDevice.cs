@@ -72,27 +72,37 @@ namespace simulated_device
         // Método asíncrono para enviar telemetría simulada
         private static async Task SendDeviceToCloudMessagesAsync()
         {
-            double minTemperature = 20;
-            double minHumidity = 60;
+            // Inicializamos el generador de números aleatorios.
             Random rand = new Random();
 
+            // nivel de glucosa en la sangre [70, 140] mg/dL
+            // concentración de dióxido de carbono al final de la espiración [35.0, 45.0] mmHg
+            //  índice o recuento de episodios de arritmia detectados [0, 5]
+            
             while (true)
             {
-                double currentTemperature = minTemperature + rand.NextDouble() * 15;
-                double currentHumidity = minHumidity + rand.NextDouble() * 20;
+                // Generar los valores aleatorios dentro de los rangos indicados.
+                double bloodGlucose = 70 + rand.NextDouble() * (140 - 70); // [70, 140] mg/dL
+                double endTidalCO2 = 35.0 + rand.NextDouble() * (45.0 - 35.0); // [35.0, 45.0] mmHg
+                int arrhythmiaIndex = rand.Next(0, 6); // [0, 5]
 
+                // Construimos el objeto de telemetría únicamente con los nuevos parámetros.
                 var telemetryDataPoint = new
                 {
-                    temperature = currentTemperature,
-                    humidity = currentHumidity
+                    bloodGlucose = bloodGlucose,
+                    endTidalCO2 = endTidalCO2,
+                    arrhythmiaIndex = arrhythmiaIndex
                 };
+
+                // Convertir el objeto a JSON.
                 var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
                 var message = new Message(Encoding.ASCII.GetBytes(messageString));
-                message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
 
+                // Enviar el mensaje de telemetría al IoT Hub.
                 await s_deviceClient.SendEventAsync(message);
-                Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
+                Console.WriteLine("{0} > Enviando mensaje: {1}", DateTime.Now, messageString);
 
+                // Esperar el intervalo definido antes de enviar el siguiente mensaje.
                 await Task.Delay(s_telemetryInterval * 1000);
             }
         }
