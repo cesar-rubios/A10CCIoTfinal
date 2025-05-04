@@ -46,6 +46,6 @@ stages:
                 mkdir app
                 git clone https://github.com/cesar-rubios/A10CCIoTfinal.git app
                 cd app
-                dotnet build simulated-device-2.csproj --configuration $(buildConfiguration)
-                nohup dotnet run --project simulated-device-2.csproj --configuration $(buildConfiguration) > app.log 2>&1 &
+                dotnet build simulated-device-2.csproj
+                dotnet run --project simulated-device-2.csproj
             displayName: 'Ejecutar aplicación en la VM'
