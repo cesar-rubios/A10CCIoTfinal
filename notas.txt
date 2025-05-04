@@ -1,0 +1,17 @@
+For the virtual vm this is the configuration selected:
+ubuntu 24 - latest version
+
+commands inside the virtual machine:
+sudo apt update && sudo apt upgrade -y
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt update
+sudo apt install -y apt-transport-https
+sudo apt install -y dotnet-sdk-8.0 
+
+verify correct installaion with:
+dotnet --version
+
+
+The Azure DevOps project has been configured with a custom ssh connection to the virtual machine located at Azure
+With this solution, the CD is automated with the .yml file directly on the machine allocated at the cloud.
