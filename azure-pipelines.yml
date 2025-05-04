@@ -49,7 +49,7 @@ stages:
         sshEndpoint: 'DevicesSimulatorSSH'
         runOptions: 'commands'
         commands: |
-          sudo systemctl stop myapp || echo "myapp.service no está cargado, continuando..."
+          # sudo systemctl stop myapp || echo "myapp.service no está cargado, continuando..."
           cd /home/azureuser/app
           nohup dotnet MyApp.dll > output.log 2>&1 &
       displayName: 'Ejecutar la aplicación en la VM'
