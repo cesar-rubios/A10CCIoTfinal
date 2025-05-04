@@ -25,23 +25,26 @@ stages:
   displayName: "Desplegar en VM Ubuntu"
   dependsOn: Build
   jobs:
-  - deployment: DeploySimulatedDevice
-    displayName: 'Desplegar aplicación en la VM'
-    environment: 'VM-Azure'  
+  - job: Deploy
     pool:
       vmImage: 'ubuntu-latest'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: SSH@0
-            inputs:
-              sshEndpoint: 'DevicesSimulatorSSH'  # Nombre de tu conexión SSH configurada a la máquina virtual
-              runOptions: 'commands'
-              readyTimeout: '30000'
-              # Comandos para desplegar y ejecutar la aplicación en la VM
-              commands: |
-                cd /home/azureuser/app
-                dotnet build simulated-device-2.csproj --configuration $(buildConfiguration)
-                nohup dotnet run --project simulated-device-2.csproj --configuration $(buildConfiguration) > app.log 2>&1 &
-            displayName: 'Ejecutar aplicación en la VM'
+    steps:
+    - download: current
+      artifact: dotnet-app
+
+    - task: CopyFilesOverSSH@0
+      inputs:
+        sshEndpoint: 'DevicesSimulatorSSH'  
+        sourceFolder: '$(Pipeline.Workspace)/dotnet-app'
+        targetFolder: '/home/azureuser/app'
+      displayName: 'Copiar artefacto a la VM'
+
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'DevicesSimulatorSSH'
+        runOptions: 'commands'
+        commands: |
+          sudo systemctl stop myapp || true
+          cd /home/azureuser/app
+          nohup dotnet MyApp.dll > output.log 2>&1 &
+      displayName: 'Ejecutar la aplicación en la VM'
