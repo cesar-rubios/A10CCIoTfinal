@@ -52,6 +52,7 @@ stages:
           cd /home/azureuser/app
           pwd
           cd app
+          pwd
           dotnet restore
           nohup dotnet run > output.log 2>&1 &
       displayName: 'Ejecutar la aplicación en la VM'
