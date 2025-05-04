@@ -12,6 +12,37 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: dotnet build simulated-device-2.csproj --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+stages:
+- stage: Build
+  displayName: "Construir Aplicación"
+  jobs:
+  - job: BuildJob
+    steps:
+    - script: dotnet build simulated-device-2.csproj --configuration $(buildConfiguration)
+      displayName: 'Compilar proyecto'
+
+- stage: Deploy
+  displayName: "Desplegar en VM Ubuntu"
+  dependsOn: Build
+  jobs:
+  - deployment: DeploySimulatedDevice
+    displayName: 'Desplegar aplicación en la VM'
+    environment: 'VM-Azure'  
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: SSH@0
+            inputs:
+              sshEndpoint: 'DevicesSimulatorSSH'  # Nombre de tu conexión SSH configurada a la máquina virtual
+              runOptions: 'commands'
+              # Comandos para desplegar y ejecutar la aplicación en la VM
+              command: |
+                mkdir app
+                cd /home/azureuser/app  # ruta de despliegue
+                dotnet build simulated-device-2.csproj --configuration $(buildConfiguration)
+                # Ejecutar la aplicación en segundo plano usando nohup para que siga corriendo
+                nohup dotnet run --project simulated-device-2.csproj --configuration $(buildConfiguration) > app.log 2>&1 &
+            displayName: 'Ejecutar aplicación en la VM'
