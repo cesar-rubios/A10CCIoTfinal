@@ -41,9 +41,10 @@ stages:
               readyTimeout: '30000'
               # Comandos para desplegar y ejecutar la aplicación en la VM
               commands: |
-                mkdir -p /home/azureuser/app
-                cd /home/azureuser/app  # ruta de despliegue
+                cd /home/azureuser
+                rm -rf app
+                git clone https://github.com/tu_usuario/tu_repositorio.git app
+                cd app
                 dotnet build simulated-device-2.csproj --configuration $(buildConfiguration)
-                # Ejecutar la aplicación en segundo plano usando nohup para que siga corriendo
                 nohup dotnet run --project simulated-device-2.csproj --configuration $(buildConfiguration) > app.log 2>&1 &
             displayName: 'Ejecutar aplicación en la VM'
