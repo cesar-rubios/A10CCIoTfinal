@@ -20,12 +20,16 @@ stages:
       displayName: 'Construir imagen Docker'
       inputs:
         command: 'build'  # Comando para construir la imagen
-        repository: simulatedregistry.azurecr.io/simulated-devices  
+        repository: simulatedregistry.azurecr.io/simulated-devices  # Asegúrate de usar el repositorio correcto (Docker Hub o ACR)
         dockerfile: 'Dockerfile'  # Ruta al Dockerfile
         tags: '$(tag)'  # Usar el Build ID como etiqueta para la imagen
-        containerRegistry: 'SimulatedRegistry' 
+        containerRegistry: 'SimulatedRegistry'  # Asegúrate de tener el servicio de conexión configurado
 
-- stage: Push  # Etapa para subir la imagen a un registro (ACR)
+    - script: |
+        docker images  # Verificar que la imagen fue construida
+      displayName: 'Verificar imágenes Docker construidas'
+
+- stage: Push  # Etapa para subir la imagen a un registro (ACR o Docker Hub)
   displayName: 'Subir imagen a Azure Container Registry'
   dependsOn: Build  # Dependencia de la etapa de construcción
   jobs:
@@ -35,10 +39,9 @@ stages:
       vmImage: ubuntu-latest  # Agente de compilación de Ubuntu
     steps:
     - task: Docker@2  # Tarea de Docker para subir la imagen
-      displayName: 'Subir imagen a Docker Hub'
+      displayName: 'Subir imagen a Docker Hub o ACR'
       inputs:
         command: 'push'  # Comando para subir la imagen
-        repository: simulatedregistry.azurecr.io/simulated-devices
+        repository: simulatedregistry.azurecr.io/simulated-devices  # Cambia esto a tu Docker Hub o ACR
         tags: '$(tag)'  # Usar el Build ID como etiqueta
-        containerRegistry: 'SimulatedRegistry'  # Servicio de conexión a ACR
-
+        containerRegistry: 'SimulatedRegistry'  # Servicio de conexión a ACR (si usas ACR)
