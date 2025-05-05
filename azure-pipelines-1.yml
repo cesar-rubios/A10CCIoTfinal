@@ -1,0 +1,43 @@
+trigger:
+- main  # La pipeline se ejecuta cuando hay cambios en la rama 'main'
+
+resources:
+- repo: self  # Refiere al repositorio actual en GitHub
+
+variables:
+  tag: '$(Build.BuildId)'  # La etiqueta para la imagen Docker será el ID de la compilación
+
+stages:
+- stage: Build  # Etapa de construcción de la imagen
+  displayName: 'Construir imagen Docker'
+  jobs:
+  - job: Build  # Trabajo de construcción
+    displayName: 'Construir'
+    pool:
+      vmImage: ubuntu-latest  # Agente de compilación de Ubuntu
+    steps:
+    - task: Docker@2  # Tarea de Docker para construir la imagen
+      displayName: 'Construir imagen Docker'
+      inputs:
+        command: 'build'  # Comando para construir la imagen
+        dockerfile: 'Dockerfile'  # Ruta al Dockerfile
+        tags: |
+          $(tag)  # Usar el Build ID como etiqueta para la imagen
+
+- stage: Push  # Etapa para subir la imagen a un registro (ACR)
+  displayName: 'Subir imagen a Azure Container Registry'
+  dependsOn: Build  # Dependencia de la etapa de construcción
+  jobs:
+  - job: Push  # Trabajo de subida
+    displayName: 'Subir imagen'
+    pool:
+      vmImage: ubuntu-latest  # Agente de compilación de Ubuntu
+    steps:
+    - task: Docker@2  # Tarea de Docker para subir la imagen
+      displayName: 'Subir imagen a Docker Hub'
+      inputs:
+        command: 'push'  # Comando para subir la imagen
+        repository: simulatedregistry.azurecr.io/simulated-devices
+        tags: '$(tag)'  # Usar el Build ID como etiqueta
+        containerRegistry: 'SimulatedRegistry'  # Servicio de conexión a ACR
+
