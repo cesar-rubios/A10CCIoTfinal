@@ -20,9 +20,11 @@ stages:
       displayName: 'Construir imagen Docker'
       inputs:
         command: 'build'  # Comando para construir la imagen
+        repository: simulatedregistry.azurecr.io/simulated-devices  
         dockerfile: 'Dockerfile'  # Ruta al Dockerfile
         tags: |
           $(tag)  # Usar el Build ID como etiqueta para la imagen
+        containerRegistry: 'SimulatedRegistry' 
 
 - stage: Push  # Etapa para subir la imagen a un registro (ACR)
   displayName: 'Subir imagen a Azure Container Registry'
