@@ -13,14 +13,8 @@ sleep 3
 # Cambiar al directorio de la app
 cd /home/azureuser/app || { echo "[ERROR] No se pudo acceder a /home/azureuser/app"; exit 1; }
 
-# Restaurar dependencias
-echo "[INFO] Restaurando dependencias..."
-dotnet restore || { echo "[ERROR] Falló dotnet restore"; exit 1; }
-
 # Lanzar la app en segundo plano
 echo "[INFO] Lanzando aplicación..."
 nohup dotnet simulated-device-2.dll > output.log 2>&1 &
 
-echo "[INFO] Aplicación lanzada. Revisa output.log para el log de ejecución."
-date
-echo "[INFO] --- Despliegue finalizado ---"
+echo "[INFO] Aplic
