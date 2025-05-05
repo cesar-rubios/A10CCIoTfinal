@@ -59,7 +59,7 @@ stages:
 
           sleep 3
 
-          cd /home/***/app || { echo "[ERROR] No se pudo acceder a /home/***/app"; exit 1; }
+          cd /home/***/app || echo "[ERROR] No se pudo acceder a /home/***/app"
 
           echo "[INFO] Lanzando aplicación..."
           nohup dotnet simulated-device-2.dll > output.log 2>&1 &
