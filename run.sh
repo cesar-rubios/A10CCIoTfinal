@@ -17,4 +17,5 @@ cd /home/azureuser/app || { echo "[ERROR] No se pudo acceder a /home/azureuser/a
 echo "[INFO] Lanzando aplicación..."
 nohup dotnet simulated-device-2.dll > output.log 2>&1 &
 
-echo "[INFO] Aplic
+echo "[INFO] Aplicación lanzada. Revisa output.log para el log de ejecución.
+
