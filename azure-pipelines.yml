@@ -51,6 +51,20 @@ stages:
         sshEndpoint: 'DevicesSimulatorSSH'
         runOptions: 'commands'
         commands: |
-          chmod +x /home/azureuser/app/run.sh
-          bash /home/azureuser/app/run.sh
+          echo "[INFO] --- Despliegue iniciado ---"
+          date
+
+          echo "[INFO] Matando procesos anteriores..."
+          pkill -f "dotnet simulated-device-2.dll" || echo "No hay procesos previos."
+
+          sleep 3
+
+          cd /home/azureuser/app || { echo "[ERROR] No se pudo acceder a /home/azureuser/app"; exit 1; }
+
+          echo "[INFO] Lanzando aplicación..."
+          nohup dotnet simulated-device-2.dll > output.log 2>&1 &
+
+          echo "[INFO] Aplicación lanzada. Revisa output.log para el log de ejecución."
+          date
+          echo "[INFO] --- Despliegue finalizado ---"
       displayName: 'Ejecutar la aplicación en la VM'
