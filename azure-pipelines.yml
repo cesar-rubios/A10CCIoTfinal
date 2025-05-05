@@ -49,5 +49,6 @@ stages:
         sshEndpoint: 'DevicesSimulatorSSH'
         runOptions: 'commands'
         commands: |
+          chmod +x /home/azureuser/app/run.sh
           bash /home/azureuser/app/run.sh
       displayName: 'Ejecutar la aplicación en la VM'
