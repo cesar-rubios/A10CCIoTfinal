@@ -63,5 +63,6 @@ stages:
             --registry-login-server $(containerRegistry) \
             --registry-username $(ACR_USERNAME) \
             --registry-password $(ACR_PASSWORD) \
+            --os-type Linux \
             --environment-variables S_CONNECTION="$(S_CONNECTION)" REPO_URL="$(REPO_URL)" \
             --restart-policy Always
