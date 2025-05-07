@@ -1,8 +1,8 @@
-   #!/bin/bash
-   set -e
+#!/bin/bash
+set -e
 
-   git clone "$REPO_URL" /repo
+git clone "$REPO_URL" /repo
 
-   cd /repo
+cd /repo
 
-   dotnet run --project ./SimulatedDevice.cs
+dotnet run --project ./SimulatedDevice.cs
