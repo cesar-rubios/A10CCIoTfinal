@@ -37,3 +37,31 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+- stage: Deploy
+  displayName: Deploy to Azure Container Instances
+  dependsOn: Build
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureCLI@2
+      displayName: Deploy container to ACI
+      inputs:
+        azureSubscription: 'group7registryconnection'    
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az container delete --resource-group final-group7 --name simulateddevice --yes || true
+
+          az container create \
+            --resource-group final-group7 \
+            --name simulateddevice \
+            --image $(containerRegistry)/$(imageRepository):$(tag) \
+            --registry-login-server $(containerRegistry) \
+            --registry-username $(ACR_USERNAME) \
+            --registry-password $(ACR_PASSWORD) \
+            --environment-variables S_CONNECTION="$(S_CONNECTION)" REPO_URL="$(REPO_URL)" \
+            --restart-policy Always
