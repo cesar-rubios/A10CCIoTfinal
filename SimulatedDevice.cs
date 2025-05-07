@@ -118,8 +118,9 @@ namespace simulated_device
             // Se inicia el envío de mensajes
             var sendTask = SendDeviceToCloudMessagesAsync();
 
-            // Se espera a que el usuario pulse Enter para salir o Ctrl+C para abortar.
-            Console.ReadLine();
+            // He tenido que modificar esta línea para que el programa no termine inmediatamente.
+            // en caso de dejar Console.ReadLine() el programa se cierra y docker cierra el contenedor.
+            await Task.Delay(Timeout.Infinite);
         }
     }
 }
