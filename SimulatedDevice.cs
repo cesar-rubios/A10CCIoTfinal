@@ -78,7 +78,7 @@ namespace simulated_device
 
             // nivel de glucosa en la sangre [70, 140] mg/dL
             // concentración de dióxido de carbono al final de la espiración [35.0, 45.0] mmHg
-            //  índice o recuento de episodios de arritmia detectados [0, 5]
+            // índice o recuento de episodios de arritmia detectados [0, 5]
             
             while (true)
             {

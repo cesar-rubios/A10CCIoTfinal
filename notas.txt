@@ -15,3 +15,5 @@ dotnet --version
 name of the docker image: cesarubios/ccgroup7
 
 you have to include the env variables for the string connection and for the github repo
+
+# this line is for the new version
