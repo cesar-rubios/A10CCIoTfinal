@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("simulated-device-2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+447208afc62e340765f53e52ac118e554f98f5e3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67b4fd424fee0329d7c83dba9d004da0c6d30af4")]
 [assembly: System.Reflection.AssemblyProductAttribute("simulated-device-2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("simulated-device-2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
