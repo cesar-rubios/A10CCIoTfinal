@@ -10,7 +10,7 @@ namespace simulated_device
     class SimulatedDevice
     {
         private static DeviceClient s_deviceClient;
-        private readonly static string s_connectionString = "HostName=group7-hub.azure-devices.net;DeviceId=SimulatedDevice;SharedAccessKey=gYO09uonPxJpFJMyIN0RfF+OzHvZsB9xvwpCgfXDnWM=";
+        private readonly static string s_connectionString = "";
         private static int s_telemetryInterval = 5; // segundos
 
         private static async Task<DeviceClient> ConnectIoTHubWithRetriesAsync(int maxRetries = 5, int delayMilliseconds = 2000)
