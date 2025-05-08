@@ -12,7 +12,7 @@ namespace simulated_device
         private static DeviceClient s_deviceClient;
         private readonly static string s_connectionString = Environment.GetEnvironmentVariable("S_CONNECTION");
 
-        private static int s_telemetryInterval = 5; // segundos
+        private static int s_telemetryInterval = 60; // segundos
 
         private static async Task<DeviceClient> ConnectIoTHubWithRetriesAsync(int maxRetries = 5, int delayMilliseconds = 2000)
         {
