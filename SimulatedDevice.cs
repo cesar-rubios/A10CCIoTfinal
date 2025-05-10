@@ -86,10 +86,12 @@ namespace simulated_device
                 double bloodGlucose = 70 + rand.NextDouble() * (140 - 70); // [70, 140] mg/dL
                 double endTidalCO2 = 35.0 + rand.NextDouble() * (45.0 - 35.0); // [35.0, 45.0] mmHg
                 int arrhythmiaIndex = rand.Next(0, 6); // [0, 5]
+				bool isSimulated = true;//always true
 
                 // Construimos el objeto de telemetría únicamente con los nuevos parámetros.
                 var telemetryDataPoint = new
                 {
+					isSimulated = isSimulated,
                     bloodGlucose = bloodGlucose,
                     endTidalCO2 = endTidalCO2,
                     arrhythmiaIndex = arrhythmiaIndex
