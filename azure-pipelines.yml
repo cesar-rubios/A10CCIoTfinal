@@ -50,7 +50,7 @@ stages:
     - task: AzureCLI@2
       displayName: Deploy container to ACI
       inputs:
-        azureSubscription: 'group7registryconnection'    
+        azureSubscription: 'group7registryconnectionfinal'    
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
