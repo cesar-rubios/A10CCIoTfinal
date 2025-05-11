@@ -68,3 +68,4 @@ stages:
             --memory 1.5 \
             --environment-variables S_CONNECTION="$(S_CONNECTION)" REPO_URL="$(REPO_URL)" \
             --restart-policy Always
+
